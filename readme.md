@@ -119,6 +119,9 @@ public class BattleOfBastards {
 ###### 利用dagger2进行依赖注入
 
 + Dagger 2 works on Annotation processor. 需要了解一定的java注解知识
+
+![](https://images2018.cnblogs.com/blog/596306/201807/596306-20180712162600096-601192821.png)
+
 + 首先了解dagger2最常用的2个注解 ```@Inject``` 和 ```@Component```
 
 #### @Inject Annotation
