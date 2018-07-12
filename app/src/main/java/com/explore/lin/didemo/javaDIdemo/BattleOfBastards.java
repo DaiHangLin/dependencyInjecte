@@ -8,6 +8,15 @@ package com.explore.lin.didemo.javaDIdemo;
 
 public class BattleOfBastards {
     public static void main(String[] args){
-        new War();
+//        Starks starks = new Starks();
+//        Boltons boltons = new Boltons();
+//
+//        War war = new War(starks,boltons);
+//        war.prepare();
+//        war.report();
+        BattleComponent battleComponent = DaggerBattleComponent.create();
+        War war = battleComponent.getWar();
+        war.prepare();
+        war.report();
     }
 }

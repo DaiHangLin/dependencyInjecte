@@ -1,5 +1,7 @@
 package com.explore.lin.didemo.javaDIdemo;
 
+import javax.inject.Inject;
+
 /**
  * @author lin
  * @date 18/7/12
@@ -8,16 +10,22 @@ package com.explore.lin.didemo.javaDIdemo;
 
 public class War {
     private Starks starks;
-
     private Boltons boltons;
 
-    public War(){
-        starks = new Starks();
-        boltons = new Boltons();
+    //DI - getting dependencies from else where via constructor
+    @Inject
+    public War(Starks starks, Boltons bolton){
+        this.starks = starks;
+        this.boltons = bolton;
+    }
 
+    public void prepare(){
         starks.prepareForWar();
-        starks.reportForWar();
         boltons.prepareForWar();
+    }
+
+    public void report(){
+        starks.reportForWar();
         boltons.reportForWar();
     }
 }

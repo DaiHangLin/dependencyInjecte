@@ -1,5 +1,7 @@
 package com.explore.lin.didemo.javaDIdemo;
 
+import javax.inject.Inject;
+
 /**
  * @author lin
  * @date 18/7/12
@@ -7,6 +9,11 @@ package com.explore.lin.didemo.javaDIdemo;
  */
 
 public class Boltons implements House {
+
+    public Boltons() {
+
+    }
+
     @Override
     public void prepareForWar() {
         System.out.println(this.getClass().getSimpleName()+" prepared for war");
