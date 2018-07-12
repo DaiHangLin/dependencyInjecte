@@ -314,3 +314,4 @@ interface BattleComponent {
 
 + 同样先新建不使用dagger的项目
 
+参考[https://github.com/DaiHangLin/dependencyInjecte](https://github.com/DaiHangLin/dependencyInjecte)

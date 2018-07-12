@@ -14,11 +14,16 @@ import com.explore.lin.interfaces.RandomUsersApi;
 import com.explore.lin.model.RandomUsers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Retrofit retrofit;
     RecyclerView recyclerView;
     RandomUserAdapter mAdapter;
+    Picasso picasso;
 
 
     @Override
@@ -50,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
         Timber.plant(new Timber.DebugTree());
 
+        File cacheFile = new File(this.getCacheDir(), "HttpCache");
+        cacheFile.mkdirs();
+
+        Cache cache = new Cache(cacheFile, 10 * 1000 * 1000); //10 MB
+
         HttpLoggingInterceptor httpLoggingInterceptor = new
                 HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -62,8 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient okHttpClient = new OkHttpClient()
                 .newBuilder()
+                .cache(cache)
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
+
+        OkHttp3Downloader okHttpDownloader = new OkHttp3Downloader(okHttpClient);
+
+        picasso = new Picasso.Builder(this).downloader(okHttpDownloader).build();
 
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
