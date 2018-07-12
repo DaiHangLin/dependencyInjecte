@@ -310,5 +310,7 @@ interface BattleComponent {
 
 + 如果我们删除```Boltons.java```构造器中的注解```@Inject```,会发现无法通过编译,因为在```war.java```的构造器中存在对```Boltons```的依赖
 
+###### 在android中应用dagger
 
++ 同样先新建不使用dagger的项目
 
