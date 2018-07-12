@@ -315,3 +315,7 @@ interface BattleComponent {
 + 同样先新建不使用dagger的项目
 
 参考[https://github.com/DaiHangLin/dependencyInjecte](https://github.com/DaiHangLin/dependencyInjecte)
+
++ 利用dagger2进行依赖注入
+参考[https://github.com/DaiHangLin/dependencyInjecte/tree/dependencyinject](https://github.com/DaiHangLin/dependencyInjecte/tree/dependencyinject)
+
