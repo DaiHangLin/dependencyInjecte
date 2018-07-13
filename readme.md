@@ -133,6 +133,12 @@ public class BattleOfBastards {
 
 ```@Inject```注解告诉dagger哪些方法，构造器或者字段是需要依赖注入
 
+But ```@Inject``` doesn’t work everywhere:
+
++ Interfaces can’t be constructed.
++ Third-party classes can’t be annotated.
++ Configurable objects must be configured!
+
 #### @Component Annotation
 作用于接口
 
@@ -312,6 +318,96 @@ interface BattleComponent {
 ```
 
 + 如果我们删除```Boltons.java```构造器中的注解```@Inject```,会发现无法通过编译,因为在```war.java```的构造器中存在对```Boltons```的依赖
+
+###### 总结
+
+比如有个classA中存在对classB的依赖，用dagger2怎么实现呢
+
++ 一种
+
+```java
+class A {
+
+    @Inject
+    public A() {
+    }
+
+    @Inject
+    B b;
+
+    void act() {
+        b.prepare();
+    }
+}
+
+class B {
+    @Inject
+    public B() {
+
+    }
+
+    void prepare() {
+        System.out.println("b.prepare()");
+    }
+}
+
+@Component
+interface AComponent {
+    A a();
+}
+
+public class InjectDemo {
+
+    public static void main(String[] args) {
+        DaggerAComponent.create().a().act();
+    }
+}
+```
+
++ 二，什么时候使用```@Provide```，比如你使用第三方库，或则B中构造器没有```@Inject```时
+
+```java
+class AP {
+    @Inject
+    public AP() {
+
+    }
+    @Inject
+    BP bp;
+
+    void act() {
+        bp.prepare();
+    }
+}
+
+class BP {
+    void prepare() {
+        System.out.println("bp.prepare()");
+    }
+}
+
+@Component(modules = {APModule.class})
+interface APComponent{
+    AP ap();
+}
+
+@Module
+class APModule {
+
+    @Provides
+    BP providerBP() {
+        return new BP();
+    }
+}
+
+public class ProvideDemo {
+    public static void main(String[] main) {
+        DaggerAPComponent.create().ap().act();
+    }
+}
+```
+
+
 
 ###### 在android中应用dagger
 
